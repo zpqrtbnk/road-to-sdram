@@ -1,0 +1,27 @@
+SDRAM
+
+This module provides a PHY-level raw access to the SDRAM chip.
+
+We used the MIG to generate a full controller. The MIG produces files
+in the <project>.gen/sources_1/ip/mig/mig/user_design directory. From
+there we copied:
+
+- The constaints/mig.xdc file
+- The complete rtl/phy directory
+- The complete rtl/clocking directory
+
+In addition, the <project>.gen/sources_1/ip/mig/mig/example_design
+directory contains some files that we need for simulation purposes:
+
+- The sim/ddr3_model.sv and sim/ddr3_model_parameters.vh files
+- The sim/wiredly.v file
+
+Finally, we need the MIG parameters from user_design/rtl/mig_mig.v,
+they are copied over into sdram.vh.
+
+NOTE: at the moment SIM_BYPASS_INIT_CAL is "FAST" and should be "OFF"
+once we have tested that it works OK with "OFF".
+
+The only custom file here is sdram.sv which bundles together the MIG
+PHY plus the various clocking modules and exposes a very low-level
+interface.
